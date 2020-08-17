@@ -1,0 +1,36 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": ["react", "prettier"],
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "rules": {
+      // note you must disable the base rule as it can report incorrect errors
+      "no-unused-vars": "off",
+      "react/jsx-no-bind": "warn",
+      "react/prop-types": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 80,
+          "tabWidth": 2,
+          "singleQuote": true,
+          "jsxSingleQuote": true,
+          "trailingComma": "es5"
+        }
+      ]
+    },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+      }
+    },
+    "parser": "babel-eslint"
+  }

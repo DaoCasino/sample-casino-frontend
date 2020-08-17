@@ -1,0 +1,20 @@
+import React from 'react';
+import { IconBase } from './IconBase';
+
+const VIEW_BOX = '0 0 18 16';
+const DEFAULT_FILL = '#ffffff';
+
+const Icon = () => {
+  return (
+    <path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M3 0C1.34315 0 0 1.34315 0 3V13C0 14.6569 1.34315 16 3 16H15C16.6569 16 18 14.6569 18 13V12.5C18 11.9477 17.5523 11.5 17 11.5C16.4477 11.5 16 11.9477 16 12.5V13C16 13.5523 15.5523 14 15 14H3C2.44772 14 2 13.5523 2 13V3C2 2.44772 2.44772 2 3 2H15C15.5523 2 16 2.44772 16 3V3.5C16 4.05228 16.4477 4.5 17 4.5C17.5523 4.5 18 4.05228 18 3.5V3C18 1.34315 16.6569 0 15 0H3ZM13 5C11.3431 5 10 6.34315 10 8C10 9.65685 11.3431 11 13 11H15C16.6569 11 18 9.65685 18 8C18 6.34315 16.6569 5 15 5H13ZM12 8C12 7.44772 12.4477 7 13 7H15C15.5523 7 16 7.44772 16 8C16 8.55228 15.5523 9 15 9H13C12.4477 9 12 8.55228 12 8Z'
+      fill={DEFAULT_FILL}
+    />
+  );
+};
+
+export const IconWalletMenu = ({ size, ...props }) => (
+  <IconBase size={size} viewBox={VIEW_BOX} Icon={Icon} {...props} />
+);
