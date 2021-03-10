@@ -1,0 +1,34 @@
+{
+    "name": "Super-seven-deluxe",
+    "icons": {
+        "small": "/163x238_x1.png",
+        "big": "/312x312_x1.png"
+    },
+    "description": "Enjoy playing Slots online with no deposits and fees. Revolutionize your iGaming experience with the safest blockchain casino %s.",
+    "text": "lorem ipsum",
+    "gameSpecURL": "http://",
+    "optimizedIcons": {
+        "small": {
+            "1x": [
+                "/163x238_x1.webp",
+                "/163x238_x1.png"
+            ],
+            "2x": [
+                "/163x238_x3.webp",
+                "/163x238_x3.png"
+            ]
+        },
+        "big": {
+            "1x": [
+                "/312x312_x1.webp",
+                "/312x312_x1.png"
+            ],
+            "2x": [
+                "/312x312_x3.webp",
+                "/312x312_x3.png"
+            ]
+        }
+    },
+    "isLocal": true,
+    "isDAOGame": false
+}

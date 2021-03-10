@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import GameActions from 'Stores/GameStore';
-
+import ModalActions from 'Stores/ModalStore';
 import GameFullIframe from './GameFullIframe';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -9,6 +9,9 @@ const mapDispatchToProps = (dispatch) => ({
     loading[id] = status;
     dispatch(GameActions.gameIframeLoading(loading));
   },
+
+  showInsufficientBalance: () =>
+    dispatch(ModalActions.modalOpen('insufficient-balance')),
 });
 
 export default connect(null, mapDispatchToProps)(GameFullIframe);

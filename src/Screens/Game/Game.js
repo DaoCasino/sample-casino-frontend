@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from 'Components/Header';
 import GameQuery from './Components/GameQuery';
-import { withStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Modals from 'Components/Modals';
+import styled from 'styled-components';
 
-const styles = (theme) => ({
-  content: {
-    background: theme.palette.content.main,
-    position: 'relative',
-  },
-});
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
 
-function Game(props) {
-  const { classes } = props;
+  main {
+    position: relative;
+
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+`;
+
+function hideIntercom() {
+  if ('Intercom' in window) {
+    window.Intercom('update', { hide_default_launcher: true });
+    return () => {
+      window.Intercom('update', { hide_default_launcher: false });
+    };
+  }
+}
+
+function Game() {
+  useEffect(() => {
+    return hideIntercom();
+  });
   return (
     <React.Fragment>
-      <Header />
-      <Box component='main' className={classes.content}>
-        <GameQuery />
-      </Box>
+      <Wrapper>
+        <Header />
+        <main>
+          <GameQuery />
+        </main>
+      </Wrapper>
       <Modals />
     </React.Fragment>
   );
 }
 
-export default withStyles(styles)(Game);
+export default Game;

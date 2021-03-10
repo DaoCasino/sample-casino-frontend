@@ -108,4 +108,16 @@ export const logout = async (tokens) => {
   return api.logout(tokens);
 };
 
+export const optout = async (tokens) => {
+  console.log('SDK optout');
+  const api = await getAPI();
+  return api.optout(tokens);
+};
+
+export const setEthAddress = async (tokens, ethAddress) => {
+  console.log('SDK setEthAddress');
+  const api = await getAPI();
+  return api.setEthAddress(tokens, ethAddress);
+};
+
 export { TokenExpiredError };

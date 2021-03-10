@@ -15,8 +15,3 @@ export const gamesRequestFailure = (state, action) => {
   const { error } = action;
   return state.merge({ loading: false, error, items: [] });
 };
-
-export const gamesSelectGame = (state, action) => {
-  const { id } = action;
-  return state.merge({ selected: id });
-};

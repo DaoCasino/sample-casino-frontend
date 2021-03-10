@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url(./Gilroy-SemiBold.eot) format('eot'),
+    url(./Gilroy-SemiBold.woff) format('woff'),
+    url(./Gilroy-SemiBold.ttf) format('ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url(./Gilroy-Bold.eot) format('eot'),
+    url(./Gilroy-Bold.woff) format('woff'), url(./Gilroy-Bold.ttf) format('ttf');
+  font-weight: 700;
+  font-style: normal;
+}

@@ -1,42 +1,27 @@
-import React, { useEffect } from 'react';
-// import GameIframe from '../GameIframe';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import GameIframeWindow from '../GameIframe/GameIframeWindow';
-import GameFullIframe from '../GameFullIframe';
+import GameQueryLogic from './GameQueryLogic';
 
-// function handleExpandedClickMock() {}
-
-function GameQuery(props) {
-  const { id } = useParams();
-  const { selectGame, getGames, isLogged, game, loading, showModal } = props;
+function GameQuery({ getGames, games }) {
+  const { rewrite } = useParams();
+  const [id, setId] = useState(null);
+  useEffect(() => {
+    getGames(true);
+  }, [getGames]);
 
   useEffect(() => {
-    if (isLogged) {
-      getGames(true);
-      selectGame(id);
+    const item = games.find(
+      (game) => game.rewrite === rewrite || game.id.toString() === rewrite
+    );
+    if (item) {
+      setId(item.id);
     }
+  }, [games, rewrite]);
 
-    if (!loading && isLogged === false) {
-      showModal();
-    }
-  }, [id, getGames, selectGame, isLogged, loading, showModal]);
-
-  // if (!game) { // TODO: DPM-347 remove iframe window
-  //   return (
-  //     <GameIframeWindow
-  //       name=''
-  //       onExpand={handleExpandedClickMock}
-  //     ></GameIframeWindow>
-  //   );
-  // }
-  //
-  // return <GameIframe game={game} />;
-
-  if (!game) {
-    return <React.Fragment />;
+  if (id) {
+    return <GameQueryLogic id={id} />;
   }
-
-  return <GameFullIframe game={game} />;
+  return <></>;
 }
 
 export default GameQuery;

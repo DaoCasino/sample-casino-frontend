@@ -125,7 +125,8 @@ function GameIframe(props) {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Sample - {name}</title>
+        <meta property='og:title' content={`Trustbet - ${name}`} />
+        <title>Trustbet - {name}</title>
       </Helmet>
       <GameIframeWindow name={name} onExpand={handleExpandedClick}>
         <GameIframeLoader />

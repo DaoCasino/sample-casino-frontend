@@ -13,6 +13,11 @@ const MODAL_INITIAL_STATE = {
   'wallet-disclaimer': false,
   'not-logged': false,
   'not-whitelisted': false,
+  'insufficient-balance': false,
+  'delete-account': false,
+  'dependence-webgl': false,
+  'demo-mode': false,
+  claim: false,
 };
 
 const INITIAL_STATE = Immutable(MODAL_INITIAL_STATE);
