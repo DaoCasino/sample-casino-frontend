@@ -8,13 +8,13 @@ const { Types, Creators } = createActions({
 export const GamesTypes = Types;
 export default Creators;
 
-export const GAME_INITIAL_STATE = {
+const GAME_INITIAL_STATE = {
   iframeLoading: {},
 };
 
-export const INITIAL_STATE = Immutable(GAME_INITIAL_STATE);
+const INITIAL_STATE = Immutable(GAME_INITIAL_STATE);
 
-export const gameIframeLoading = (state, action) => {
+const gameIframeLoading = (state, action) => {
   const { loading } = action;
   const { iframeLoading } = state;
   return state.merge({ iframeLoading: { ...iframeLoading, ...loading } });

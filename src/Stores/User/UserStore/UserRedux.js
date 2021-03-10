@@ -1,5 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
+import { getValue } from './Sagas/UILogic';
 
 import config from 'Config/AppConfig';
 
@@ -14,6 +15,12 @@ import {
   logoutRequest,
   logoutRequestSuccess,
   logoutRequestFailure,
+  optoutRequest,
+  optoutRequestSuccess,
+  optoutRequestFailure,
+  setEthAddressRequest,
+  setEthAddressRequestSuccess,
+  setEthAddressRequestFailure,
 } from './Reducers';
 
 const { Types, Creators } = createActions({
@@ -35,10 +42,30 @@ const { Types, Creators } = createActions({
   logoutRequest: null,
   logoutRequestSuccess: null,
   logoutRequestFailure: ['error'],
+
+  optoutRequest: null,
+  optoutRequestSuccess: null,
+  optoutRequestFailure: ['error'],
+
+  setEthAddressRequest: ['ethAddress'],
+  setEthAddressRequestSuccess: null,
+  setEthAddressRequestFailure: ['error'],
 });
 
 export const UserTypes = Types;
 export default Creators;
+
+// const getAuthTokens = () => {
+//   const accessToken = localStorage.getItem('accessToken');
+//   const refreshToken = localStorage.getItem('refreshToken');
+
+//   if (accessToken && refreshToken) {
+//     // authData
+//     return { accessToken, refreshToken };
+//   }
+
+//   return null;
+// };
 
 export const USER_INITIAL_STATE = {
   loading: false,
@@ -46,6 +73,7 @@ export const USER_INITIAL_STATE = {
   error: null,
   casinoName: config.casinoName,
   accountInfo: null,
+  isShowModal: getValue(false), // show wallet modal
 };
 
 export const INITIAL_STATE = Immutable(USER_INITIAL_STATE);
@@ -71,4 +99,12 @@ export const reducers = createReducer(INITIAL_STATE, {
   [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGOUT_REQUEST_SUCCESS]: logoutRequestSuccess,
   [Types.LOGOUT_REQUEST_FAILURE]: logoutRequestFailure,
+
+  [Types.OPTOUT_REQUEST]: optoutRequest,
+  [Types.OPTOUT_REQUEST_SUCCESS]: optoutRequestSuccess,
+  [Types.OPTOUT_REQUEST_FAILURE]: optoutRequestFailure,
+
+  [Types.SET_ETH_ADDRESS_REQUEST]: setEthAddressRequest,
+  [Types.SET_ETH_ADDRESS_REQUEST_SUCCESS]: setEthAddressRequestSuccess,
+  [Types.SET_ETH_ADDRESS_REQUEST_FAILURE]: setEthAddressRequestFailure,
 });

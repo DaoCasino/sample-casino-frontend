@@ -1,6 +1,5 @@
-import { put, call, select, take, fork, all } from 'redux-saga/effects';
+import { put, call, take, fork, all } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import { getCasinoName } from '../Selectors';
 
 import { getAuthTokens } from 'Stores/User/AuthStore/AuthRedux';
 
@@ -10,6 +9,9 @@ import ModalActions from 'Stores/ModalStore';
 
 import { WalletAuth } from '@daocasino/platform-back-js-lib';
 import config from 'Config/AppConfig';
+
+import { loginRequestWithModalSuccess } from './UILogic';
+import Cookies from 'js-cookie';
 
 import {
   connectionChannel,
@@ -21,14 +23,23 @@ import {
   accountInfo,
   subscribe,
   logout,
+  optout,
 } from 'Services/SDK.js';
 
 const walletAuth = new WalletAuth(
   config.walletUrl,
-  config.walletAuthRedirectUrl
+  config.walletAuthRedirectUrl,
+  config.walletPlatformId,
+  config.walletPlatformEnv,
+  config.casinoName
 );
 // Remove token from the window location
 walletAuth.clearLocation();
+
+// TODO: REMOVE
+window.walletAuthURL = walletAuth.getAuthURL();
+window.walletSingUp = walletAuth.getAuthURL();
+window.walletSingUp.pathname = '/signup/auth'; // TODO: fix
 
 const {
   loginRequestSuccess,
@@ -38,6 +49,8 @@ const {
   loginRequestDisconnect,
   logoutRequestSuccess,
   logoutRequestFailure,
+  optoutRequestSuccess,
+  optoutRequestFailure,
 } = UserActions;
 
 const { authSetTokens } = AuthActions;
@@ -130,6 +143,10 @@ function whitelisted({ accountName }) {
   return config.whitelist.includes(accountName);
 }
 
+function setAnalyticsInfo({ accountName }) {
+  Cookies.set('user_Id', accountName);
+}
+
 export function* loginRequestWithTokens({ tokens }) {
   console.log('saga loginRequestWithTokens', tokens);
   let err = null;
@@ -156,15 +173,13 @@ export function* loginRequestWithTokens({ tokens }) {
 
   if (whitelisted(info)) {
     yield put(loginRequestSuccess(info));
+    // disable wallet disclamer modal after success login
+    yield call(loginRequestWithModalSuccess);
+    // set cookie user_id
+    yield call(setAnalyticsInfo, info);
   } else {
     yield all([put(modalOpen('not-whitelisted')), call(logoutRequest)]);
   }
-}
-
-export function* loginRequest() {
-  console.log('saga loginRequest');
-  const casinoName = yield select(getCasinoName);
-  walletAuth.auth(casinoName);
 }
 
 export function* loginRequestBalance() {
@@ -202,5 +217,22 @@ export function* logoutRequest() {
   } catch (err) {
     console.error(err);
     yield put(logoutRequestFailure(err));
+  }
+}
+
+export function* optoutRequest() {
+  console.log('saga optout');
+  const tokens = yield call(getAuthTokens);
+
+  try {
+    yield call(optout, tokens);
+
+    yield put(authSetTokens(null));
+    walletAuth.token = null;
+
+    yield put(optoutRequestSuccess());
+  } catch (err) {
+    console.error(err);
+    yield put(optoutRequestFailure(err));
   }
 }

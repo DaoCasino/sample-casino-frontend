@@ -1,9 +1,7 @@
-import {
-  Games,
-  Game,
-  Faq,
-  SamplePage,
-} from 'Screens';
+import React from 'react';
+
+import Games from 'Screens/Games';
+import Game from 'Screens/Game';
 
 const routes = [
   {
@@ -12,19 +10,19 @@ const routes = [
     component: Games,
   },
   {
-    path: '/game/:id',
+    path: '/game/:rewrite',
     exact: false,
     component: Game,
   },
   {
-    path: '/faq/:id?',
+    path: '/faq',
     exact: false,
-    component: Faq,
+    component: React.lazy(() => import('../Screens/Faq')),
   },
   {
     path: '/sample',
     exact: false,
-    component: SamplePage,
+    component: React.lazy(() => import('../Screens/SamplePage')),
   },
 ];
 

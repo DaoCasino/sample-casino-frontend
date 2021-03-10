@@ -7,4 +7,3 @@ function* sagas() {
 }
 
 export default sagas;
-export * from './GamesRequest';
